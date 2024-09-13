@@ -5,6 +5,7 @@ import favoriteModel from "../models/favorite.model.js";
 import reviewModel from "../models/review.model.js";
 import tokenMiddlerware from "../middlewares/token.middleware.js";
 
+//* Fetches the media
 const getList = async (req, res) => {
   try {
     const { page } = req.query;
@@ -22,6 +23,7 @@ const getList = async (req, res) => {
   }
 };
 
+//* Fetches the media for specific genres
 const getGenres = async (req, res) => {
   try {
     const { mediaType } = req.params;
@@ -32,6 +34,7 @@ const getGenres = async (req, res) => {
   }
 };
 
+//* Fetches the media for specific search
 const search = async (req, res) => {
   try {
     const { mediaType } = req.params;
@@ -49,6 +52,7 @@ const search = async (req, res) => {
   }
 };
 
+//* Fetches the media details
 const getDetail = async (req, res) => {
   try {
     const { mediaType, mediaId } = req.params;

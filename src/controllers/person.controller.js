@@ -1,6 +1,7 @@
 import responseHandler from "../handlers/response.handler.js";
 import tmdbApi from "../tmdb/tmdb.api.js";
 
+//* Fetches detailed information about crew/cast
 const personDetail = async (req, res) => {
   try {
     const { personId } = req.params;
@@ -11,6 +12,7 @@ const personDetail = async (req, res) => {
   }
 };
 
+//* Fetches media associated with crew/cast
 const personMedias = async (req, res) => {
   try {
     const { personId } = req.params;
