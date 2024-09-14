@@ -3,6 +3,9 @@ import userRoute from "./user.route.js";
 import mediaRoute from "./media.route.js";
 import personRoute from "./person.route.js";
 import reviewRoute from "./review.route.js";
+import path from 'path';
+
+console.log('Resolved path:', path.resolve('./routes/index.js'));
 
 const router = express.Router();
 
