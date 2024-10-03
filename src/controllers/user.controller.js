@@ -1,20 +1,6 @@
 import User from "../models/User.model.js";
 import bcrypt from "bcrypt"; 
 
-//* Route to get all users | GET | "/user/allUsers"
-export const getUsers = async (req, res, next) => {
-  let users;
-  try {
-    users = await User.find();
-  } catch (error) {
-    return next(error);
-  }
-  if (!users) {
-    return res.status(500).json({ message: "No users found." });
-  }
-
-  return res.status(200).json({ users });
-};
 
 //* Route to create a new user | POST | "/user/create"
 export const createUser = async (req, res, next) => {
@@ -71,20 +57,20 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-//* Route to update a user's password | PUT | "/user/:id"
+//* Route to update a user's password | PUT | "/user/:email"
  export const updatePassword = async (req, res, next) => {
-  const { name } = req.params;
+  const { email } = req.params;
   const { password, newPassword } = req.body;
 
   try {
-    const user = await User.findById(name);
+    const user = await User.findOne({email});
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
 
     // Validate password strength
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(password)) {
+    if (!passwordRegex.test(newPassword)) {
       return res.status(400).json({
         message:
           "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters.",

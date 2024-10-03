@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from 'mongoose';
 import "dotenv/config";
 import userRouter from './src/routes/user.routes.js';
+import adminRouter from './src/routes/admin.routes.js';
 
 const app = express();
 
@@ -28,3 +29,4 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 
 // Routes
 app.use("/user", userRouter);
+app.use("/admin", adminRouter);
