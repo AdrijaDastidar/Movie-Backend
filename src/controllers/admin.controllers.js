@@ -1,6 +1,7 @@
 import Admin from "../models/Admin.model.js";
 import User from "../models/User.model.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 //* Route to get all users | GET | "/admin/allUsers"
 export const getUsers = async (req, res, next) => {
@@ -78,8 +79,12 @@ export const loginAdmin = async (req, res, next) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Incorrect password." });
     }
-
-    return res.status(200).json({ message: "Admin login successful." });
+    const token = jwt.sign(
+      { id: admin._id },
+      process.env.JWT_TOKEN,
+      { expiresIn: "3h" }
+    );
+    return res.json({ message: "Admin login successful.", token, id: admin._id  });
   } catch (error) {
     next(error);
   }
