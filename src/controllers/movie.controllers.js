@@ -1,5 +1,5 @@
 import Movie from "../models/Movie.model.js";
-
+import {authenticateAdmin} from "../middlewares/admin.middleware.js";
 //* Route to get all movies | GET | "movie/"
 export const getMovies = async (req, res, next) => {
   let movies;
@@ -45,7 +45,7 @@ export const createMovie = async (req, res, next) => {
       .status(400)
       .json({ message: "A movie with the same id already exists." });
   }
-  const movie = new Movie(req.body);
+  const movie = new Movie({...req.body, admin: req.adminId});
   try {
     await movie.save();
     res.status(201).json(movie);

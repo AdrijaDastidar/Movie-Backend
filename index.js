@@ -6,6 +6,8 @@ import "dotenv/config";
 import userRouter from './src/routes/user.routes.js';
 import adminRouter from './src/routes/admin.routes.js';
 import movieRouter from './src/routes/movie.routes.js';
+import theaterRouter from './src/routes/theater.routes.js';
+
 
 const app = express();
 
@@ -32,3 +34,4 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/movie", movieRouter);
+app.use("/theater", theaterRouter);
