@@ -1,6 +1,6 @@
 import Movie from "../models/Movie.model.js";
 
-//* Route to get all movies | GET | "/"
+//* Route to get all movies | GET | "movie/"
 export const getMovies = async (req, res, next) => {
   let movies;
   try {
@@ -14,21 +14,21 @@ export const getMovies = async (req, res, next) => {
   res.status(200).json(movies);
 };
 
-//* Route to get a single movie | GET | "/:id"
+//* Route to get a single movie | GET | "movie/:id"
 export const getMovieById = async (req, res, next) => {
-  let movie;
   try {
-    movie = await Movie.findById(req.params.id);
+    const movie = await Movie.findOne({ id: req.params.id });
+    
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found." });
+    }
+    res.status(200).json(movie);
   } catch (error) {
-    return next(error);
+    return next(error); 
   }
-  if (!movie) {
-    return res.status(404).json({ message: "Movie not found." });
-  }
-  res.status(200).json(movie);
 };
 
-//* Route to create a new movie | POST | "/create"
+//* Route to create a new movie | POST | "movie/create"
 export const createMovie = async (req, res, next) => {
   if (
     !req.body.title ||
@@ -54,13 +54,13 @@ export const createMovie = async (req, res, next) => {
   }
 };
 
-//* Route to update a movie | POST | "/:id"
+//* Route to update a movie | POST | "movie/:id"
  export const updateMovie = async (req, res, next) => {
   const { id } = req.params;
   const updatedMovie = req.body;
 
   try {
-    const movie = await Movie.findByIdAndUpdate(id, updatedMovie, { new: true });
+    const movie = await Movie.findOneAndUpdate({id}, updatedMovie, { new: true });
     if (!movie) {
       return res.status(404).json({ message: "Movie not found." });
     }
@@ -70,16 +70,16 @@ export const createMovie = async (req, res, next) => {
   }
 };
 
-//* Route to delete a movie | DELETE | "/:id"
+//* Route to delete a movie | DELETE | "movie/:id"
 export const deleteMovie = async (req, res) => {
     const { id } = req.params;
 
     try{
-        const movie = await Movie.findByIdAndDelete(id);
+        const movie = await Movie.findOneAndDelete({id});
         if(!movie){
             return res.status(404).json({message: "Movie not found."});
         }
-        res.status(204).json();
+        res.status(200).json({message: "Movie deleted successfully."});
     }
     catch(error){
         return res.status(500).json({message: "Failed to delete movie."});

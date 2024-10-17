@@ -31,9 +31,6 @@ const movieSchema = new mongoose.Schema({
         type : String,
         required: true
     },
-    bookings :[
-        {type: String}
-    ],
     admin :{
         type: String,
         required: true

@@ -6,8 +6,8 @@ import { getMovies, getMovieById, createMovie, updateMovie, deleteMovie } from '
 movieRouter.get('/', getMovies);
 movieRouter.get('/:id', getMovieById);
 movieRouter.post('/create', createMovie);
-movieRouter.post('/update/:id', updateMovie);
-movieRouter.delete('/delete/:id', deleteMovie);
+movieRouter.post('/:id', updateMovie);
+movieRouter.delete('/:id', deleteMovie);
 
 
 export default movieRouter;
