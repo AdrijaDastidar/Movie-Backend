@@ -1,13 +1,9 @@
 import mongoose from "mongoose";
 
 const BookingSchema = new mongoose.Schema({
-    TheaterId:{
+    seatId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Theater",
-        required: true
-    },
-    seatNumber: {
-        type: String,
+        ref: "Seat",
         required: true
     },
     userId: {
@@ -16,7 +12,8 @@ const BookingSchema = new mongoose.Schema({
         required: true
     },
     addOn: {
-        type: [String],
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "addon"
     },
     cost: {
         type: Number,
@@ -25,6 +22,7 @@ const BookingSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
+        default : "Pending"
     }
 });
 

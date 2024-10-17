@@ -1,5 +1,6 @@
 import Movie from "../models/Movie.model.js";
 import {authenticateAdmin} from "../middlewares/admin.middleware.js";
+
 //* Route to get all movies | GET | "movie/"
 export const getMovies = async (req, res, next) => {
   let movies;

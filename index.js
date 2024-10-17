@@ -7,6 +7,7 @@ import userRouter from './src/routes/user.routes.js';
 import adminRouter from './src/routes/admin.routes.js';
 import movieRouter from './src/routes/movie.routes.js';
 import theaterRouter from './src/routes/theater.routes.js';
+import bookingRouter from './src/routes/Booking.routes.js';
 
 
 const app = express();
@@ -35,3 +36,4 @@ app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/movie", movieRouter);
 app.use("/theater", theaterRouter);
+app.use("/booking", bookingRouter);
