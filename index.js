@@ -6,8 +6,9 @@ import "dotenv/config";
 import userRouter from './src/routes/user.routes.js';
 import adminRouter from './src/routes/admin.routes.js';
 import movieRouter from './src/routes/movie.routes.js';
-import theaterRouter from './src/routes/theater.routes.js';
+import showTimeRouter from './src/routes/showTime.routes.js';
 import bookingRouter from './src/routes/Booking.routes.js';
+import paymentsRouter from './src/routes/payment.routes.js';
 
 
 const app = express();
@@ -35,5 +36,10 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/movie", movieRouter);
-app.use("/theater", theaterRouter);
+app.use("/showTime", showTimeRouter);
 app.use("/booking", bookingRouter);
+app.use("/payment", paymentsRouter);
+
+app.get('/key', (req, res) => {
+  res.status(200).json({ key: process.env.RAZORPAY_KEY_ID });
+});
