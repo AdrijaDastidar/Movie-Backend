@@ -9,6 +9,7 @@ import movieRouter from './src/routes/movie.routes.js';
 import showTimeRouter from './src/routes/showTime.routes.js';
 import bookingRouter from './src/routes/Booking.routes.js';
 import paymentsRouter from './src/routes/payment.routes.js';
+import theaterRouter from './src/routes/theater.routes.js';
 
 
 const app = express();
@@ -38,6 +39,7 @@ app.use("/admin", adminRouter);
 app.use("/movie", movieRouter);
 app.use("/showTime", showTimeRouter);
 app.use("/booking", bookingRouter);
+app.use("/theater", theaterRouter);
 app.use("/payment", paymentsRouter);
 
 app.get('/key', (req, res) => {

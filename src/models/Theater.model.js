@@ -1,13 +1,13 @@
 import mongoose, { Types } from "mongoose";
 const theaterSchema = new mongoose.Schema({
   name:{
-    Types: String,
+    type: String,
   },
   city:{
-    Types: String,
+    type: String,
   },
-  State:{
-    Types: String,
+  state:{
+    type: String,
   }
 });
 
