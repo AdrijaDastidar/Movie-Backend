@@ -7,11 +7,6 @@ const showTimeSchema = new mongoose.Schema({
     ref: "Movie",
     required: true
   },
-  adminId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Admin",
-    required: true
-  },
   theaterId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "theater", 

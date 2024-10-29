@@ -1,11 +1,18 @@
 import express from 'express';
-const showTimeRouter = express.Router();
+import { 
+  getshowTime, 
+  getshowTimeById, 
+  createshowTime, 
+  updateshowTime, 
+  deleteshowTime 
+} from '../controllers/ShowTime.controllers.js';
 
-import { getshowTime, getshowTimeById, createshowTime } from '../controllers/ShowTime.controllers.js';
-import { authenticateAdmin } from "../middlewares/admin.middleware.js";
+const router = express.Router();
 
-showTimeRouter.get("/", getshowTime);
-showTimeRouter.get("/:id", getshowTimeById);
-showTimeRouter.post("/create", authenticateAdmin, createshowTime);
+router.get('/', getshowTime);
+router.get('/:id', getshowTimeById);
+router.post('/create', createshowTime);
+router.put('/:id', updateshowTime);
+router.delete('/:id', deleteshowTime);
 
-export default showTimeRouter;
+export default router;
