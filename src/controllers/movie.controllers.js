@@ -1,52 +1,41 @@
 import Movie from "../models/Movie.model.js";
-import {authenticateAdmin} from "../middlewares/admin.middleware.js";
+import { authenticateAdmin } from "../middlewares/admin.middleware.js";
 
 //* Route to get all movies | GET | "movie/"
 export const getMovies = async (req, res, next) => {
-  let movies;
   try {
-    movies = await Movie.find();
+    const movies = await Movie.find();
+    if (!movies.length) {
+      return res.status(404).json({ message: "No movies found." });
+    }
+    res.status(200).json(movies);
   } catch (error) {
     return next(error);
   }
-  if (!movies) {
-    return res.status(404).json({ message: "No movies found." });
-  }
-  res.status(200).json(movies);
 };
 
 //* Route to get a single movie | GET | "movie/:id"
 export const getMovieById = async (req, res, next) => {
   try {
-    const movie = await Movie.findOne({ id: req.params.id });
-    
+    const movie = await Movie.findById(req.params.id);
     if (!movie) {
       return res.status(404).json({ message: "Movie not found." });
     }
     res.status(200).json(movie);
   } catch (error) {
-    return next(error); 
+    return next(error);
   }
 };
 
 //* Route to create a new movie | POST | "movie/create"
 export const createMovie = async (req, res, next) => {
-  if (
-    !req.body.title ||
-    !req.body.releaseDate ||
-    !req.body.genre ||
-    !req.body.id ||
-    !req.body.posterUrl
-  ) {
+  const { title,releaseDate, genre, posterUrl, rating, description } = req.body;
+  
+  if (!title || !releaseDate || !genre || !posterUrl ||!rating ||!description) {
     return res.status(400).json({ message: "Missing required fields." });
   }
-  const existingMovie = await Movie.findOne({ id: req.body.id });
-  if (existingMovie) {
-    return res
-      .status(400)
-      .json({ message: "A movie with the same id already exists." });
-  }
-  const movie = new Movie({...req.body, admin: req.adminId});
+
+  const movie = new Movie({ ...req.body });
   try {
     await movie.save();
     res.status(201).json(movie);
@@ -56,12 +45,12 @@ export const createMovie = async (req, res, next) => {
 };
 
 //* Route to update a movie | POST | "movie/:id"
- export const updateMovie = async (req, res, next) => {
+export const updateMovie = async (req, res, next) => {
   const { id } = req.params;
   const updatedMovie = req.body;
 
   try {
-    const movie = await Movie.findOneAndUpdate({id}, updatedMovie, { new: true });
+    const movie = await Movie.findByIdAndUpdate(id, updatedMovie, { new: true });
     if (!movie) {
       return res.status(404).json({ message: "Movie not found." });
     }
@@ -73,16 +62,15 @@ export const createMovie = async (req, res, next) => {
 
 //* Route to delete a movie | DELETE | "movie/:id"
 export const deleteMovie = async (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    try{
-        const movie = await Movie.findOneAndDelete({id});
-        if(!movie){
-            return res.status(404).json({message: "Movie not found."});
-        }
-        res.status(200).json({message: "Movie deleted successfully."});
+  try {
+    const movie = await Movie.findByIdAndDelete(id);
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found." });
     }
-    catch(error){
-        return res.status(500).json({message: "Failed to delete movie."});
-    }
+    res.status(200).json({ message: "Movie deleted successfully." });
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to delete movie." });
+  }
 };

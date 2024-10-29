@@ -7,7 +7,7 @@ import { authenticateAdmin } from "../middlewares/admin.middleware.js";
 movieRouter.get('/', getMovies);
 movieRouter.get('/:id', getMovieById);
 movieRouter.post('/create',authenticateAdmin , createMovie);
-movieRouter.post('/:id', updateMovie);
+movieRouter.put('/:id', updateMovie);
 movieRouter.delete('/:id', deleteMovie);
 
 

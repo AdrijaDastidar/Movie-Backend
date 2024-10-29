@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
 const movieSchema = new mongoose.Schema({
-    id :{
-        type: String,
-        required: true,
-        unique: true
-    },
     title: {
         type: String,
         required: true
@@ -14,8 +9,9 @@ const movieSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    director: {
-        type: String,
+    rating:{
+        type: Number,
+        required: true
     },
     genre: {
         type: String,
@@ -24,14 +20,11 @@ const movieSchema = new mongoose.Schema({
     duration: {
         type: Number,
     },
-    actors: {
-        type: [String],
-    },
     posterUrl: {
         type : String,
         required: true
     },
-    admin :{
+    description:{
         type: String,
         required: true
     }
