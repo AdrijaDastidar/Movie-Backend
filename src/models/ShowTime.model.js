@@ -14,7 +14,8 @@ const showTimeSchema = new mongoose.Schema({
   },
   seats: {
     type: String,
-    required: true
+    required: true,
+    default: 48,
   },
   time: {
     type: String,
