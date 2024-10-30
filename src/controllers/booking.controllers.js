@@ -32,18 +32,19 @@ export const getBookingById = async (req, res, next) => {
 
 // Route to create a new booking | POST | "/booking"
 export const createBooking = async (req, res, next) => {
-    const { seatId, addOn, cost } = req.body;
+    const { showTimeId, seatNumber, addOn, cost } = req.body;
   
-    if (!seatId || !addOn || !cost) {
+    if (!showTimeId || !addOn || !cost || !seatNumber) {
       return res.status(400).json({ message: "Missing required fields." });
     }
   
     try {
       const booking = new Booking({
-        seatId: seatId,
+        showTimeId: showTimeId,
         addOn: addOn,
         cost: cost,
-        userId: req.user.id 
+        userId: req.user.id ,
+        seatNumber: seatNumber
       });
   
       await booking.save();

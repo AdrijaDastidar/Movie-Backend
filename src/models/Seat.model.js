@@ -1,15 +1,19 @@
 import mongoose from "mongoose";
 
 const SeatSchema = new mongoose.Schema({
-    theaterId:{
+    showTimeId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Theater",
+        ref: "ShowTime",
         required: true
     },
     type:{
         type: String,
         required: true,
         enum: ["normal", "executive", "premium"]
+    },
+    seatNumber:{
+        type: String,
+        required : true,
     },
     booked:{
         type: Boolean

@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import SeatModel from "./Seat.model.js";
 
 const BookingSchema = new mongoose.Schema({
-    seatId:{
+    showTimeId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Seat",
+        ref: "showTime",
         required: true
     },
     userId: {
@@ -12,8 +13,11 @@ const BookingSchema = new mongoose.Schema({
         required: true
     },
     addOn: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "addon"
+        type: Array,
+    },
+    seatNumber: {
+        type: Number,
+        required: true
     },
     cost: {
         type: Number,
@@ -22,8 +26,34 @@ const BookingSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        default : "Pending"
+        default: "Pending"
     }
 });
 
-export default mongoose.model('Booking', BookingSchema);
+BookingSchema.pre("save", async function (next) {
+    try {
+        // Find seat by showTimeId and seatNumber
+        const seat = await SeatModel.findOne({ 
+            showTimeId: this.showTimeId, 
+            seatNumber: this.seatNumber 
+        });
+        
+        if (!seat) {
+            throw new Error("Seat not found");
+        }
+        
+        if (seat.booked) {
+            throw new Error("Seat is already booked");
+        }
+
+        // Mark the seat as booked
+        seat.booked = true;
+        await seat.save();
+
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
+export default mongoose.model("Booking", BookingSchema);

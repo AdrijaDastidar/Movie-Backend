@@ -43,7 +43,7 @@ showTimeSchema.post("save", async function (theater, next) {
       }
       
       seatEntries.push({
-        theaterId: theater._id, 
+        showTimeId: this._id, 
         seatNumber: i,
         type: seatType,
         booked: false 
