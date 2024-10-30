@@ -53,3 +53,19 @@ export const createBooking = async (req, res, next) => {
       return next(error);
     }
 };
+
+// Route to get all bookings for a user | GET | "/booking/user"
+export const getUserBookings = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const bookings = await Booking.find({ userId });
+
+    if (!bookings || bookings.length === 0) {
+      return res.status(404).json({ message: "No bookings found for this user." });
+    }
+
+    return res.status(200).json({ bookings });
+  } catch (error) {
+    return next(error);
+  }
+};
