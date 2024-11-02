@@ -17,5 +17,4 @@ export const checkout = async (req, res) => {
 export const paymentVerification = async (req, res) => {
 
     res.redirect(`http://localhost:5173/paymentSuccess`)
-  res.status(200).json({ message: "Payment successful" });
 };
