@@ -17,7 +17,7 @@ export const getMovies = async (req, res, next) => {
 //* Route to get a single movie | GET | "movie/:id"
 export const getMovieById = async (req, res, next) => {
   try {
-    const movie = await Movie.findById(req.params.id);
+    const movie = await Movie.findById(req.params._id);
     if (!movie) {
       return res.status(404).json({ message: "Movie not found." });
     }
@@ -44,7 +44,7 @@ export const createMovie = async (req, res, next) => {
   }
 };
 
-//* Route to update a movie | POST | "movie/:id"
+//* Route to update a movie | PUT | "movie/:id"
 export const updateMovie = async (req, res, next) => {
   const { id } = req.params;
   const updatedMovie = req.body;
