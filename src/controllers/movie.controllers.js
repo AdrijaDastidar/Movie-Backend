@@ -1,5 +1,4 @@
 import Movie from "../models/Movie.model.js";
-import { authenticateAdmin } from "../middlewares/admin.middleware.js";
 
 //* Route to get all movies | GET | "movie/"
 export const getMovies = async (req, res, next) => {
@@ -17,7 +16,7 @@ export const getMovies = async (req, res, next) => {
 //* Route to get a single movie | GET | "movie/:id"
 export const getMovieById = async (req, res, next) => {
   try {
-    const movie = await Movie.findById(req.params._id);
+    const movie = await Movie.findById(req.params.id);
     if (!movie) {
       return res.status(404).json({ message: "Movie not found." });
     }
