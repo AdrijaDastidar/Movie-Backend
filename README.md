@@ -117,8 +117,3 @@ For any questions or suggestions, feel free to reach out:
 - **GitHub**: [AdrijaDastidar](https://github.com/AdrijaDastidar)
 
 ---
-
-## 📄 License
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
-
----
